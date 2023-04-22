@@ -1,3 +1,11 @@
+async function getData() {  
+  const data = './keyboard.json';
+  const res = await fetch(data);
+  const keyboardKeys = await res.json(); 
+  console.log(keyboardKeys)
+}
+getData();
+
 const { body } = document;
 const wrapper = document.createElement("div");
 wrapper.className = "wrapper";
