@@ -1,0 +1,159 @@
+* {
+  padding: 0;
+  margin: 0;
+  border: 0;
+}
+
+a:focus,
+a:active {
+  outline: none;
+}
+
+header {
+  display: block;
+}
+
+html,
+body {
+  height: 100%;
+  width: 100%;
+  font-size: 100%;
+  -ms-text-size-adjust: 100%;
+  -moz-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+}
+
+input,
+button,
+textarea {
+  font-family: inherit;
+}
+
+input::-ms-clear {
+  display: none;
+}
+
+button {
+  cursor: pointer;
+}
+
+button::-moz-focus-inner {
+  padding: 0;
+  border: 0;
+}
+
+a,
+a:visited {
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: none;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-size: inherit;
+  font-weight: inherit;
+}
+
+html {
+  font-size: 10px;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-size: 1.4rem;
+  font-style: normal;
+  font-weight: normal;
+  line-height: 160%;
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: 30px;
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 50px 30px;
+  border: 1px solid #000;
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  gap: 10px;
+  padding: 10px 20px;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande", "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+  text-align: center;
+}
+
+.header__title {
+  font-size: 2.5rem;
+  color: rgb(121, 82, 151);
+}
+
+.header__subtitle {
+  color: rgb(53, 32, 70);
+  font-weight: 600;
+}
+
+.project {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  padding: 15px;
+  gap: 50px;
+  width: 100%;
+}
+
+.project__screen {
+  width: 70%;
+  margin: 0 auto;
+  padding: 8px;
+  border: 1px solid #2432ac;
+}
+
+.projects__textarea {
+  width: 100%;
+  font-size: 1.6rem;
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande", "Lucida Sans", Arial, sans-serif;
+  color: rgb(53, 32, 70);
+  font-weight: 700;
+}
+
+.project__keyboard {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  gap: 10px;
+  padding: 10px 5px;
+  border: 3px solid #d42008;
+}
+.keyboard__row{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  gap: 5px;
+  align-items: center;
+}
+
+.keyboard__key{
+flex: 0 1 10%;
+padding: 2%;
+border: 1px solid #000;
+}
+
+.long{
+  flex: 1 1  50%;
+
+  background: #3a687e;
+}
