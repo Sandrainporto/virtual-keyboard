@@ -393,10 +393,10 @@
   },
   {
     "code": "MetaLeft",
-    "en": "иконк",
-    "ru": "иконк",
-    "enShift": "иконк",
-    "ruShift": "иконк"
+    "en": "⌘",
+    "ru": "⌘",
+    "enShift": "⌘",
+    "ruShift": "⌘"
   },
   {
     "code": "AltLeft",
