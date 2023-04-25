@@ -67,17 +67,66 @@ async function getData() {
   const keys = document.querySelectorAll(".keyboard__key");
 
   document.onkeydown = function (event) {
+
     textarea.blur();
     document.getElementById(event.code).classList.add("active");
-      // alt поведение по умолчание - отключено
+
+    // отключение поведения
     if (event.altKey) {
       event.preventDefault();
     }
+    if (event.code == "MetaLeft") {
+      event.preventDefault();
+    }
+   
+
+
     // CTRL & alt сменя языка
+    changeLanguage()
+
+    // показать значения с shift
+    showShiftValues()
+
+    // вывод в textarea
+    showText()
+
+
+    console.log(textareaValue)
+    return textareaValue
+
+  };
+
+
+
+  document.onkeyup = function (event) {
+    document.getElementById(event.code).classList.remove("active");
+    // убрать влияние shift
+
+    if (event.code == 'ShiftLeft' || event.code == 'ShiftRight') {
+      if (keyboard.classList.contains("latin")) {
+        for (let i = 0; i < keys.length; i++) {
+          keys[i].innerHTML = `${keyboardKeys[i].en}`;
+        }
+      } else {
+        for (let i = 0; i < keys.length; i++) {
+          keys[i].innerHTML = `${keyboardKeys[i].ru}`;
+        }
+      }
+    };
+  }
+
+
+
+
+
+
+
+
+
+  function changeLanguage() {
     if (event.ctrlKey && event.altKey) {
       keyboard.classList.toggle("latin");
       keyboard.classList.toggle("russian");
-      console.log('нажат ctrl');
       if (keyboard.classList.contains("latin")) {
         for (let i = 0; i < keys.length; i++) {
           keys[i].innerHTML = `${keyboardKeys[i].en}`;
@@ -88,24 +137,41 @@ async function getData() {
         }
       }
     }
-// вывод в textarea
+  }
+
+  function showShiftValues() {
+    if (event.shiftKey) {
+      if (keyboard.classList.contains("latin")) {
+        for (let i = 0; i < keys.length; i++) {
+          keys[i].innerHTML = `${keyboardKeys[i].enShift}`;
+        }
+      } else {
+        for (let i = 0; i < keys.length; i++) {
+          keys[i].innerHTML = `${keyboardKeys[i].ruShift}`;
+        }
+      }
+    }
+  }
+
+  function showText() {
     keys.forEach((item) => {
-      if (event.code == item.id && event.code != 'ControlLeft' && event.code != 'AltLeft') {
+      if (event.code == item.id
+        && event.code != 'ControlLeft' && event.code != 'ControlRight'
+        && event.code != 'AltLeft' && event.code != 'AltRight'
+        && event.code != 'MetaLeft'
+        && event.code != 'ShiftLeft' && event.code != 'ShiftRight') {
         textareaValue.push(`${item.innerText}`);
+      }
+      if (event.code == item.id
+        && event.code == "Space") {
+        textareaValue.push(' ');
       }
       else {
         textareaValue.push();
       }
       textarea.innerText = textareaValue.join('');
     });
-    console.log(textareaValue)
-    return textareaValue
-  };
-
-  document.onkeyup = function (event) {
-    document.getElementById(event.code).classList.remove("active");
-  };
-
+  }
 }
-getData();
 
+getData();

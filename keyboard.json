@@ -393,10 +393,10 @@
   },
   {
     "code": "MetaLeft",
-    "en": "⌘",
-    "ru": "⌘",
-    "enShift": "⌘",
-    "ruShift": "⌘"
+    "en": "Win",
+    "ru": "Win",
+    "enShift": "Win",
+    "ruShift": "Win"
   },
   {
     "code": "AltLeft",
@@ -407,10 +407,10 @@
   },
   {
     "code": "Space",
-    "en": "Space",
-    "ru": "Space",
-    "enShift": "Space",
-    "ruShift": "Space"
+    "en": " ",
+    "ru": " ",
+    "enShift": " ",
+    "ruShift": " "
   },
   {
     "code": "AltRight",
