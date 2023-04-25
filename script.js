@@ -78,7 +78,9 @@ async function getData() {
     if (event.code == "MetaLeft") {
       event.preventDefault();
     }
-   
+    if (event.code == "Tab") {
+      event.preventDefault();
+    }
 
 
     // CTRL & alt сменя языка
@@ -159,12 +161,18 @@ async function getData() {
         && event.code != 'ControlLeft' && event.code != 'ControlRight'
         && event.code != 'AltLeft' && event.code != 'AltRight'
         && event.code != 'MetaLeft'
-        && event.code != 'ShiftLeft' && event.code != 'ShiftRight') {
+        && event.code != 'ShiftLeft' && event.code != 'ShiftRight'
+        && event.code != 'Tab') {
         textareaValue.push(`${item.innerText}`);
       }
+      // поведение при пробеле
       if (event.code == item.id
         && event.code == "Space") {
         textareaValue.push(' ');
+      }
+      if (event.code == item.id
+        && event.code == "Tab") {
+        textareaValue.push('    ');
       }
       else {
         textareaValue.push();
