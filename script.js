@@ -94,7 +94,8 @@ document.onkeydown = function (event) {
 
 
   console.log(textareaValue)
-  return textareaValue
+  textarea.textContent = textareaValue.join('');
+
 
 };
 
@@ -197,7 +198,8 @@ function showText() {
       && event.code != 'ShiftLeft' && event.code != 'ShiftRight'
       && event.code != 'Tab'
       && event.code != 'Backspace'
-      && event.code != 'CapsLock') {
+      && event.code != 'CapsLock'
+      && event.code != 'Enter') {
       textareaValue.push(`${item.innerText}`);
     }
     // поведение при пробеле
@@ -215,13 +217,17 @@ function showText() {
     }
     if (event.code == item.id
       && event.code == "CapsLock") {
-      textarea.innerText = textareaValue.join('').toUpperCase();
+      textarea.textContent = textareaValue.join('').toUpperCase();
     }
-    else {
-      textareaValue.push();
+    if (event.code == item.id
+      && event.code == "Enter") {
+      textarea.textContent = textareaValue.push('\n') ;
     }
-    textarea.innerText = textareaValue.join('');
+   
   });
+  textareaValue.push();
+
+
 }
 
 
@@ -242,4 +248,3 @@ function showText() {
 //   console.log(keyboard)
 // }
 // window.addEventListener('load', getLocalStorage);
-
