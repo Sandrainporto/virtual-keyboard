@@ -69,7 +69,7 @@ export const keyboardKeys = [
     "enShift": "&",
     "ruShift": "?",
     "enCaps": "7",
-    "ruCaps": "8"
+    "ruCaps": "7"
   },
   {
     "code": "Digit8",

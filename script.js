@@ -8,6 +8,7 @@ wrapper.innerHTML = `
     <header class="header">
       <p class="header__title">RSS Виртуальная клавиатура</p>
       <p class="header__subtitle">Клавиатура создана в операционной системе Windows</p>
+      <p class="header__note">Для переключения языка клавиатуры нажать: ctrl + alt</p>
     </header>
     <main class="project">
       <div class="project__screen">
@@ -25,7 +26,6 @@ let textareaValue = [];
 const keyboard = document.getElementById("keyboard");
 keyboard.classList.toggle("latin");
 keyboard.classList.toggle("regular")
-
 
 let keyRows;
 function createRows() {
@@ -66,12 +66,14 @@ showBtns();
 const keys = document.querySelectorAll(".keyboard__key");
 
 document.onkeydown = function (event) {
-
   textarea.blur();
   document.getElementById(event.code).classList.add("active");
 
   // отключение поведения
   if (event.altKey) {
+    event.preventDefault();
+  }
+  if (event.ctrlKey) {
     event.preventDefault();
   }
   if (event.code == "MetaLeft") {
@@ -80,31 +82,125 @@ document.onkeydown = function (event) {
   if (event.code == "Tab") {
     event.preventDefault();
   }
+
+  function showCapsValues() {
+    if (event.code == 'CapsLock') {
+      keyboard.classList.toggle("Caps");
+      keyboard.classList.toggle("regular");
+
+      if (keyboard.classList.contains("Caps")) {
+        if (keyboard.classList.contains("latin")) {
+          for (let i = 0; i < keys.length; i++) {
+            keys[i].innerHTML = `${keyboardKeys[i].enCaps}`;
+          }
+        } else {
+          for (let i = 0; i < keys.length; i++) {
+            keys[i].innerHTML = `${keyboardKeys[i].ruCaps}`;
+          }
+        }
+      } else {
+        if (keyboard.classList.contains("latin")) {
+          for (let i = 0; i < keys.length; i++) {
+            keys[i].innerHTML = `${keyboardKeys[i].en}`;
+          }
+        } else {
+          for (let i = 0; i < keys.length; i++) {
+            keys[i].innerHTML = `${keyboardKeys[i].ru}`;
+          }
+        }
+      }
+    }
+  }
   showCapsValues()
 
-
   // CTRL & alt сменя языка
+  function changeLanguage() {
+    if (event.ctrlKey && event.altKey) {
+      keyboard.classList.toggle("latin");
+      keyboard.classList.toggle("russian");
+      if (keyboard.classList.contains("latin")) {
+        for (let i = 0; i < keys.length; i++) {
+          keys[i].innerHTML = `${keyboardKeys[i].en}`;
+        }
+      } else {
+        for (let i = 0; i < keys.length; i++) {
+          keys[i].innerHTML = `${keyboardKeys[i].ru}`;
+        }
+      }
+    }
+  }
   changeLanguage()
 
   // показать значения с shift
+
+  function showShiftValues() {
+    if (event.shiftKey) {
+      if (keyboard.classList.contains("latin")) {
+        for (let i = 0; i < keys.length; i++) {
+          keys[i].innerHTML = `${keyboardKeys[i].enShift}`;
+        }
+      } else {
+        for (let i = 0; i < keys.length; i++) {
+          keys[i].innerHTML = `${keyboardKeys[i].ruShift}`;
+        }
+      }
+    }
+  }
   showShiftValues()
 
   // вывод в textarea
+  function showText() {
+
+    keys.forEach((item) => {
+      if (event.code == item.id
+        && event.code != 'ControlLeft' && event.code != 'ControlRight'
+        && event.code != 'AltLeft' && event.code != 'AltRight'
+        && event.code != 'MetaLeft'
+        && event.code != 'ShiftLeft' && event.code != 'ShiftRight'
+        && event.code != 'Tab'
+        && event.code != 'Backspace'
+        && event.code != 'CapsLock'
+        && event.code != 'Enter'
+        && event.code != 'Delete') {
+        textareaValue.push(`${item.innerText}`);
+      }
+      // поведение при пробеле
+      if (event.code == item.id
+        && event.code == "Space") {
+        textareaValue.push(' ');
+      }
+      if (event.code == item.id
+        && event.code == "Tab") {
+        textareaValue.push('    ');
+      }
+      if (event.code == item.id
+        && event.code == "Backspace") {
+        textarea.textContent = textareaValue.splice(textareaValue.length - 1, 1);
+      }
+      if (event.code == item.id
+        && event.code == "CapsLock") {
+        textarea.textContent = textareaValue.join('').toUpperCase();
+      }
+      if (event.code == item.id
+        && event.code == "Enter") {
+        textarea.textContent = textareaValue.splice(textareaValue.length, 0, "\n");
+      }
+      if (event.code == item.id
+        && event.code == "Delete") {
+        textarea.textContent = textareaValue.splice(cursor, 1);
+      }
+    });
+    textareaValue.push();
+  }
   showText()
-
-
   console.log(textareaValue)
   textarea.textContent = textareaValue.join('');
-
-
 };
-
-
 
 document.onkeyup = function (event) {
   document.getElementById(event.code).classList.remove("active");
-  // убрать влияние shift
 
+  // убрать влияние shift
   if (event.code == 'ShiftLeft' || event.code == 'ShiftRight') {
     if (keyboard.classList.contains("latin")) {
       for (let i = 0; i < keys.length; i++) {
@@ -116,51 +212,167 @@ document.onkeyup = function (event) {
       }
     }
   };
-
-
-
 }
 
+let cursor;
 
-
-
-
-
-
-
-
-
-function changeLanguage() {
-  if (event.ctrlKey && event.altKey) {
-    keyboard.classList.toggle("latin");
-    keyboard.classList.toggle("russian");
-    if (keyboard.classList.contains("latin")) {
-      for (let i = 0; i < keys.length; i++) {
-        keys[i].innerHTML = `${keyboardKeys[i].en}`;
-      }
-    } else {
-      for (let i = 0; i < keys.length; i++) {
-        keys[i].innerHTML = `${keyboardKeys[i].ru}`;
-      }
+textarea.addEventListener('keydown', function () {
+  cursor = document.getElementById("textarea").selectionStart;
+  if (event.key === "Enter") {
+    textarea.blur();
+    if (cursor != 0) {
+      textareaValue.splice(cursor, 0, '\n');
+      textarea.textContent = textareaValue.join('')
     }
   }
-}
-function showCapsValues() {
-  if (event.code == 'CapsLock') {
-    keyboard.classList.toggle("Caps");
-    keyboard.classList.toggle("regular");
+  if (event.key === "Backspace") {
+    textarea.blur();
+    if (cursor != 0) {
+      textareaValue.splice(cursor - 1, 1);
+      textarea.textContent = textareaValue.join('')
+    }
+  }
+})
 
-    if (keyboard.classList.contains("Caps")) {
-      if (keyboard.classList.contains("latin")) {
-        for (let i = 0; i < keys.length; i++) {
-          keys[i].innerHTML = `${keyboardKeys[i].enCaps}`;
+
+
+
+
+
+
+
+
+keys.forEach((key) => {
+  key.addEventListener('click', () => {
+    if (key.id != 'ControlLeft' && key.id != 'ControlRight'
+      && key.id != 'AltLeft' && key.id != 'AltRight'
+      && key.id != 'MetaLeft'
+      && key.id != 'ShiftLeft' && key.id != 'ShiftRight'
+      && key.id != 'Tab'
+      && key.id != 'Backspace'
+      && key.id != 'CapsLock'
+      && key.id != 'Enter'
+      && key.id != 'Delete') {
+      textareaValue.push(`${key.innerText}`);
+      console.log(textareaValue)
+    }
+
+    if (key.id == "Space") {
+      cursor = document.getElementById("textarea").selectionStart;
+      textarea.blur();
+      if (cursor != 0) {
+        textareaValue.splice(cursor, 0, " ");
+        textarea.textContent = textareaValue.join('')
+      }
+      if (!cursor) {
+        textarea.textContent = textareaValue.splice(textareaValue.length, 0, " ");
+      }
+    }
+    if (key.id == "Tab") {
+      cursor = document.getElementById("textarea").selectionStart;
+      textarea.blur();
+      if (cursor != 0) {
+        textareaValue.splice(cursor, 0, "    ");
+        textarea.textContent = textareaValue.join('')
+      }
+      if (!cursor) {
+        textarea.textContent = textareaValue.splice(textareaValue.length, 0, "    ");
+      }
+    }
+    if (key.id == "Backspace") {
+      cursor = document.getElementById("textarea").selectionStart;
+      textarea.blur();
+      if (cursor != 0) {
+        textareaValue.splice(cursor - 1, 1);
+        textarea.textContent = textareaValue.join('')
+      }
+      if (!cursor) {
+        textarea.textContent = textareaValue.splice(textareaValue.length - 1, 1);
+      }
+    }
+    if (key.id == "CapsLock") {
+      keyboard.classList.toggle("Caps");
+      keyboard.classList.toggle("regular");
+      if (keyboard.classList.contains("Caps")) {
+        if (keyboard.classList.contains("latin")) {
+          for (let i = 0; i < keys.length; i++) {
+            keys[i].innerHTML = `${keyboardKeys[i].enCaps}`;
+          }
+        } else {
+          for (let i = 0; i < keys.length; i++) {
+            keys[i].innerHTML = `${keyboardKeys[i].ruCaps}`;
+          }
         }
       } else {
-        for (let i = 0; i < keys.length; i++) {
-          keys[i].innerHTML = `${keyboardKeys[i].ruCaps}`;
+        if (keyboard.classList.contains("latin")) {
+          for (let i = 0; i < keys.length; i++) {
+            keys[i].innerHTML = `${keyboardKeys[i].en}`;
+          }
+        } else {
+          for (let i = 0; i < keys.length; i++) {
+            keys[i].innerHTML = `${keyboardKeys[i].ru}`;
+          }
         }
       }
-    } else {
+      textarea.textContent = textareaValue.join('').toUpperCase();
+    }
+    if (key.id == 'ShiftLeft' || key.id == 'ShiftRight') {
+      keyboard.classList.toggle('shift')
+      if (keyboard.classList.contains("shift")) {
+        if (keyboard.classList.contains("latin")) {
+          for (let i = 0; i < keys.length; i++) {
+            keys[i].innerHTML = `${keyboardKeys[i].enShift}`;
+          }
+        } else {
+          for (let i = 0; i < keys.length; i++) {
+            keys[i].innerHTML = `${keyboardKeys[i].ruShift}`;
+          }
+        }
+      }
+      if (keyboard.classList.contains("shift") == false) {
+        if (keyboard.classList.contains("latin")) {
+          for (let i = 0; i < keys.length; i++) {
+            keys[i].innerHTML = `${keyboardKeys[i].en}`;
+          }
+        } else {
+          for (let i = 0; i < keys.length; i++) {
+            keys[i].innerHTML = `${keyboardKeys[i].ru}`;
+          }
+        }
+      }
+    }
+    if (key.id == "Enter") {
+      cursor = document.getElementById("textarea").selectionStart;
+      textarea.blur();
+      if (cursor != 0) {
+        textareaValue.splice(cursor - 1, 0, "\n");
+        textarea.textContent = textareaValue.join('')
+      }
+      if (!cursor) {
+        textarea.textContent = textareaValue.splice(textareaValue.length, 0, "\n");
+      }
+
+    }
+    if (key.id === "Delete") {
+      cursor = document.getElementById("textarea").selectionStart;
+      textarea.blur();
+      if (cursor != 0) {
+        textareaValue.splice(cursor, 1);
+        textarea.textContent = textareaValue.join('')
+      }
+    }
+    if (key.id === "ControlLeft") {
+      document.getElementById("ControlLeft").classList.add("focused");
+    }
+    if (key.id === "AltLeft") {
+      document.getElementById("AltLeft").classList.add("focused")
+    }
+    if (document.getElementById("ControlLeft").classList.contains("focused")
+      && document.getElementById("AltLeft").classList.contains("focused")) {
+      document.getElementById("ControlLeft").classList.remove("focused");
+      document.getElementById("AltLeft").classList.remove("focused")
+      keyboard.classList.toggle("latin");
+      keyboard.classList.toggle("russian");
       if (keyboard.classList.contains("latin")) {
         for (let i = 0; i < keys.length; i++) {
           keys[i].innerHTML = `${keyboardKeys[i].en}`;
@@ -170,81 +382,10 @@ function showCapsValues() {
           keys[i].innerHTML = `${keyboardKeys[i].ru}`;
         }
       }
+    }
+    textareaValue.push();
 
-    }
-  }
-}
-
-function showShiftValues() {
-  if (event.shiftKey) {
-    if (keyboard.classList.contains("latin")) {
-      for (let i = 0; i < keys.length; i++) {
-        keys[i].innerHTML = `${keyboardKeys[i].enShift}`;
-      }
-    } else {
-      for (let i = 0; i < keys.length; i++) {
-        keys[i].innerHTML = `${keyboardKeys[i].ruShift}`;
-      }
-    }
-  }
-}
-
-function showText() {
-  keys.forEach((item) => {
-    if (event.code == item.id
-      && event.code != 'ControlLeft' && event.code != 'ControlRight'
-      && event.code != 'AltLeft' && event.code != 'AltRight'
-      && event.code != 'MetaLeft'
-      && event.code != 'ShiftLeft' && event.code != 'ShiftRight'
-      && event.code != 'Tab'
-      && event.code != 'Backspace'
-      && event.code != 'CapsLock'
-      && event.code != 'Enter') {
-      textareaValue.push(`${item.innerText}`);
-    }
-    // поведение при пробеле
-    if (event.code == item.id
-      && event.code == "Space") {
-      textareaValue.push(' ');
-    }
-    if (event.code == item.id
-      && event.code == "Tab") {
-      textareaValue.push('    ');
-    }
-    if (event.code == item.id
-      && event.code == "Backspace") {
-      textareaValue.pop();
-    }
-    if (event.code == item.id
-      && event.code == "CapsLock") {
-      textarea.textContent = textareaValue.join('').toUpperCase();
-    }
-    if (event.code == item.id
-      && event.code == "Enter") {
-      textarea.textContent = textareaValue.push('\n') ;
-    }
-   
+    textarea.textContent = textareaValue.join('');
   });
-  textareaValue.push();
-
-
 }
-
-
-
-
-
-// function setLocalStorage() {
-//   localStorage.setItem('class', keyboard.classList);
-// }
-// window.addEventListener('beforeunload', setLocalStorage);
-
-// //востановление данных
-
-// function getLocalStorage() {
-//   if (localStorage.getItem('class')) {
-//     keyboard.classList = localStorage.getItem('class');
-//   }
-//   console.log(keyboard)
-// }
-// window.addEventListener('load', getLocalStorage);
+)
