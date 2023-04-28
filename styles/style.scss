@@ -118,14 +118,16 @@ body {
   margin: 0 auto;
   padding: 8px;
   border: 1px solid #2432ac;
+  
 }
 
 .projects__textarea {
   width: 100%;
   font-size: 1.6rem;
-  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande", "Lucida Sans", Arial, sans-serif;
+  font-family:'Times New Roman', Times, serif;
   color: rgb(53, 32, 70);
   font-weight: 700;
+  
 }
 
 .project__keyboard {
@@ -136,9 +138,13 @@ body {
   align-items: center;
   gap: 10px;
   padding: 10px 5px;
-  border: 3px solid #d42008;
+
+  background: #f3f3f3;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px,
+    rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+  border: 0.5px solid rgb(201, 173, 223);
 }
-.keyboard__row{
+.keyboard__row {
   width: 100%;
   display: flex;
   flex-direction: row;
@@ -148,25 +154,55 @@ body {
   align-items: center;
 }
 
-.keyboard__key{
-width: 50px;
-height: 50px;
-font-size: 2rem;
-font-weight: 500;
-line-height: 40px;
-text-align: center;
-cursor: pointer;
-border: 1px solid #000;
+.keyboard__key {
+  width: 50px;
+  height: 50px;
+  font-size: 2rem;
+  
+  font-weight: 500;
+  line-height: 40px;
+  text-align: center;
+  border-radius: 10%;
+  transition-duration: 0.3s;
+  cursor: pointer;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  border: 0.5px solid rgb(201, 173, 223);
 }
 
-.long{
+.long {
   width: 100px;
-  background: #3a687e;
 }
-.long:nth-child(4){
-flex: 0 1 50%;
+.colored {
+  background: rgba(163, 162, 212, 0.281);
+}
+.long:nth-child(4) {
+  flex: 0 1 50%;
+}
+.keyboard__key:hover {
+  box-shadow: rgb(121, 82, 151) 0px 3px 8px;
+}
+.active {
+  position: relative;
+  background: rgb(152, 118, 192);
+  top: 2px;
+  border-radius: 20%;
+  transition-duration: 0.3s;
+
+  border: 4px solid #ffffff;
+}
+.active-caps {
+  position: relative;
+  background: rgb(152, 118, 192);
+  border-radius: 20%;
+  transition-duration: 0.3s;
+  border: 4px solid #ffffff;
 }
 
-.active{
-  background: #8b3535;
+.keyboard__key:active {
+  position: relative;
+  background: rgb(152, 118, 192);
+  top: 2px;
+  border-radius: 20%;
+  transition-duration: 0.3s;
+  border: 4px solid #ffffff;
 }

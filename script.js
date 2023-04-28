@@ -8,7 +8,7 @@ wrapper.innerHTML = `
     <header class="header">
       <p class="header__title">RSS Виртуальная клавиатура</p>
       <p class="header__subtitle">Клавиатура создана в операционной системе Windows</p>
-      <p class="header__note">Для переключения языка клавиатуры нажать: ctrl + alt</p>
+      <p class="header__note">Для переключения языка клавиатуры использовать: левые ctrl + alt</p>
     </header>
     <main class="project">
       <div class="project__screen">
@@ -58,6 +58,9 @@ function showBtns() {
 
     const letGrow = ["Backspace", "CapsLock", "Enter", "ShiftRight", "ShiftLeft", "Space"].indexOf(code) !== -1;
     if (letGrow) { keyElement.classList.add("long"); }
+    const colorButtons = ["Backspace", "CapsLock", "Enter", "ShiftRight", "ShiftLeft", "Space", "Delete",
+     "Tab"].indexOf(code) !== -1;
+    if (colorButtons) { keyElement.classList.add("colored"); }
   });
   return keyboardKeys
 }
@@ -89,6 +92,8 @@ document.onkeydown = function (event) {
       keyboard.classList.toggle("regular");
 
       if (keyboard.classList.contains("Caps")) {
+        document.getElementById('CapsLock').classList.add("active-caps");
+
         if (keyboard.classList.contains("latin")) {
           for (let i = 0; i < keys.length; i++) {
             keys[i].innerHTML = `${keyboardKeys[i].enCaps}`;
@@ -99,6 +104,8 @@ document.onkeydown = function (event) {
           }
         }
       } else {
+        document.getElementById('CapsLock').classList.remove("active-caps");
+
         if (keyboard.classList.contains("latin")) {
           for (let i = 0; i < keys.length; i++) {
             keys[i].innerHTML = `${keyboardKeys[i].en}`;
@@ -294,6 +301,8 @@ keys.forEach((key) => {
       keyboard.classList.toggle("Caps");
       keyboard.classList.toggle("regular");
       if (keyboard.classList.contains("Caps")) {
+        document.getElementById('CapsLock').classList.add("active-caps");
+
         if (keyboard.classList.contains("latin")) {
           for (let i = 0; i < keys.length; i++) {
             keys[i].innerHTML = `${keyboardKeys[i].enCaps}`;
@@ -304,6 +313,8 @@ keys.forEach((key) => {
           }
         }
       } else {
+        document.getElementById('CapsLock').classList.remove("active-caps");
+
         if (keyboard.classList.contains("latin")) {
           for (let i = 0; i < keys.length; i++) {
             keys[i].innerHTML = `${keyboardKeys[i].en}`;
@@ -389,3 +400,5 @@ keys.forEach((key) => {
   });
 }
 )
+
+
