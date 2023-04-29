@@ -1,5 +1,6 @@
 import { keyboardKeys } from './keyboard.js';
 
+
 const { body } = document;
 
 const wrapper = document.createElement('div');
@@ -12,7 +13,7 @@ wrapper.innerHTML = `
     </header>
     <main class="project">
       <div class="project__screen">
-        <textarea class="projects__textarea" name="" id="textarea" cols="50" rows="5" autofocus></textarea>
+        <textarea class="projects__textarea" name="" id="textarea" cols="50" rows="5" style="background:linear-gradient(to right, #FFFFFF, #ECE9E6);" autofocus></textarea>
       </div>
       <div class="project__keyboard keyboard" id="keyboard">
       </div>
@@ -25,8 +26,26 @@ const textareaValue = [];
 let cursor;
 
 const keyboard = document.getElementById('keyboard');
+
+
+
 keyboard.classList.toggle('latin');
+let language = localStorage.getItem('languageChange');
+if (language == 'latin') {
+  keyboard.classList.add('latin');
+  keyboard.classList.remove('russian');
+
+}
+if (language == 'russian') {
+  keyboard.classList.remove('latin');
+  keyboard.classList.add('russian');
+
+}
+
 keyboard.classList.toggle('regular');
+
+
+
 
 let keyRows;
 function createRows() {
@@ -43,6 +62,7 @@ function showBtns() {
     keyElement.setAttribute('type', 'button');
     keyElement.classList.add('keyboard__key');
     keyElement.id = `${code}`;
+
     if (keyboard.classList.contains('latin')) {
       keyElement.innerHTML = `${en}`;
     } else {
@@ -68,14 +88,14 @@ showBtns();
 
 const keys = document.querySelectorAll('.keyboard__key');
 
+
+
+
 document.onkeydown = function catchKey(event) {
   textarea.blur();
   document.getElementById(event.code).classList.add('active');
 
-  // отключение поведения
-  if (event.altKey) {
-    event.preventDefault();
-  }
+
   if (event.ctrlKey) {
     event.preventDefault();
   }
@@ -122,9 +142,15 @@ document.onkeydown = function catchKey(event) {
 
   // CTRL & alt сменя языка
   function changeLanguage() {
-    if (event.ctrlKey && event.altKey) {
+    if (event.ctrlKey && event.code === 'AltLeft') {
       keyboard.classList.toggle('latin');
       keyboard.classList.toggle('russian');
+
+      localStorage.setItem('languageChange', keyboard.classList[3]);
+
+
+
+
       if (keyboard.classList.contains('latin')) {
         for (let i = 0; i < keys.length; i++) {
           keys[i].innerHTML = `${keyboardKeys[i].en}`;
@@ -173,11 +199,28 @@ document.onkeydown = function catchKey(event) {
       // поведение при пробеле
       if (event.code === item.id
         && event.code === 'Space') {
-        textareaValue.push(' ');
+        cursor = document.getElementById('textarea').selectionStart;
+        textarea.blur();
+        if (cursor !== 0) {
+          textareaValue.splice(cursor, 0, ' ');
+          textarea.textContent = textareaValue.join('');
+        }
+        if (!cursor) {
+          textarea.textContent = textareaValue.splice(textareaValue.length, 0, ' ');
+        }
       }
+
       if (event.code === item.id
         && event.code === 'Tab') {
-        textareaValue.push('    ');
+        cursor = document.getElementById('textarea').selectionStart;
+        textarea.blur();
+        if (cursor !== 0) {
+          textareaValue.splice(cursor, 0, '    ');
+          textarea.textContent = textareaValue.join('');
+        }
+        if (!cursor) {
+          textarea.textContent = textareaValue.splice(textareaValue.length, 0, '    ');
+        }
       }
       if (event.code === item.id
         && event.code === 'Backspace') {
@@ -218,6 +261,7 @@ document.onkeyup = function catchKeyUp(event) {
       }
     }
   }
+
 };
 
 textarea.addEventListener('keydown', (event) => {
@@ -372,6 +416,8 @@ keys.forEach((key) => {
       document.getElementById('AltLeft').classList.remove('focused');
       keyboard.classList.toggle('latin');
       keyboard.classList.toggle('russian');
+      localStorage.setItem('languageChange', keyboard.classList[3]);
+
       if (keyboard.classList.contains('latin')) {
         for (let i = 0; i < keys.length; i++) {
           keys[i].innerHTML = `${keyboardKeys[i].en}`;
@@ -387,3 +433,4 @@ keys.forEach((key) => {
     textarea.textContent = textareaValue.join('');
   });
 });
+
