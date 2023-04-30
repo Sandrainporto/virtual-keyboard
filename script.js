@@ -1,6 +1,5 @@
 import { keyboardKeys } from './keyboard.js';
 
-
 const { body } = document;
 
 const wrapper = document.createElement('div');
@@ -26,26 +25,19 @@ const textareaValue = [];
 let cursor;
 
 const keyboard = document.getElementById('keyboard');
-
-
-
 keyboard.classList.toggle('latin');
-let language = localStorage.getItem('languageChange');
-if (language == 'latin') {
+
+const language = localStorage.getItem('languageChange');
+
+if (language === 'latin') {
   keyboard.classList.add('latin');
   keyboard.classList.remove('russian');
-
 }
-if (language == 'russian') {
+if (language === 'russian') {
   keyboard.classList.remove('latin');
   keyboard.classList.add('russian');
-
 }
-
 keyboard.classList.toggle('regular');
-
-
-
 
 let keyRows;
 function createRows() {
@@ -56,7 +48,6 @@ function createRows() {
 
 function showBtns() {
   createRows();
-
   keyboardKeys.map(({ code, en, ru }) => {
     const keyElement = document.createElement('button');
     keyElement.setAttribute('type', 'button');
@@ -68,7 +59,6 @@ function showBtns() {
     } else {
       keyElement.innerHTML = `${ru}`;
     }
-
     keyRows.appendChild(keyElement);
 
     const insertLineBreak = ['Backspace', 'Delete', 'Enter', 'ShiftRight'].indexOf(code) !== -1;
@@ -88,13 +78,9 @@ showBtns();
 
 const keys = document.querySelectorAll('.keyboard__key');
 
-
-
-
 document.onkeydown = function catchKey(event) {
   textarea.blur();
   document.getElementById(event.code).classList.add('active');
-
 
   if (event.ctrlKey) {
     event.preventDefault();
@@ -113,7 +99,6 @@ document.onkeydown = function catchKey(event) {
 
       if (keyboard.classList.contains('Caps')) {
         document.getElementById('CapsLock').classList.add('active-caps');
-
         if (keyboard.classList.contains('latin')) {
           for (let i = 0; i < keys.length; i++) {
             keys[i].innerHTML = `${keyboardKeys[i].enCaps}`;
@@ -140,16 +125,12 @@ document.onkeydown = function catchKey(event) {
   }
   showCapsValues();
 
-  // CTRL & alt сменя языка
   function changeLanguage() {
     if (event.ctrlKey && event.code === 'AltLeft') {
       keyboard.classList.toggle('latin');
       keyboard.classList.toggle('russian');
 
       localStorage.setItem('languageChange', keyboard.classList[3]);
-
-
-
 
       if (keyboard.classList.contains('latin')) {
         for (let i = 0; i < keys.length; i++) {
@@ -163,8 +144,6 @@ document.onkeydown = function catchKey(event) {
     }
   }
   changeLanguage();
-
-  // показать значения с shift
 
   function showShiftValues() {
     if (event.shiftKey) {
@@ -181,7 +160,6 @@ document.onkeydown = function catchKey(event) {
   }
   showShiftValues();
 
-  // вывод в textarea
   function showText() {
     keys.forEach((item) => {
       if (event.code === item.id
@@ -196,7 +174,7 @@ document.onkeydown = function catchKey(event) {
         && event.code !== 'Delete') {
         textareaValue.push(`${item.innerText}`);
       }
-      // поведение при пробеле
+
       if (event.code === item.id
         && event.code === 'Space') {
         cursor = document.getElementById('textarea').selectionStart;
@@ -209,7 +187,6 @@ document.onkeydown = function catchKey(event) {
           textarea.textContent = textareaValue.splice(textareaValue.length, 0, ' ');
         }
       }
-
       if (event.code === item.id
         && event.code === 'Tab') {
         cursor = document.getElementById('textarea').selectionStart;
@@ -242,14 +219,12 @@ document.onkeydown = function catchKey(event) {
     textareaValue.push();
   }
   showText();
-  console.log(textareaValue);
   textarea.textContent = textareaValue.join('');
 };
 
 document.onkeyup = function catchKeyUp(event) {
   document.getElementById(event.code).classList.remove('active');
 
-  // убрать влияние shift
   if (event.code === 'ShiftLeft' || event.code === 'ShiftRight') {
     if (keyboard.classList.contains('latin')) {
       for (let i = 0; i < keys.length; i++) {
@@ -261,7 +236,6 @@ document.onkeyup = function catchKeyUp(event) {
       }
     }
   }
-
 };
 
 textarea.addEventListener('keydown', (event) => {
@@ -294,7 +268,6 @@ keys.forEach((key) => {
       && key.id !== 'Enter'
       && key.id !== 'Delete') {
       textareaValue.push(`${key.innerText}`);
-      console.log(textareaValue);
     }
 
     if (key.id === 'Space') {
@@ -433,4 +406,3 @@ keys.forEach((key) => {
     textarea.textContent = textareaValue.join('');
   });
 });
-
