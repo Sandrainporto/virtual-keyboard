@@ -1,0 +1,218 @@
+* {
+  padding: 0;
+  margin: 0;
+  border: 0;
+}
+
+a:focus,
+a:active {
+  outline: none;
+}
+
+header {
+  display: block;
+}
+
+html,
+body {
+  height: 100%;
+  width: 100%;
+  font-size: 100%;
+  -ms-text-size-adjust: 100%;
+  -moz-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+}
+
+input,
+button,
+textarea {
+  font-family: inherit;
+}
+
+input::-ms-clear {
+  display: none;
+}
+
+button {
+  cursor: pointer;
+}
+
+button::-moz-focus-inner {
+  padding: 0;
+  border: 0;
+}
+
+a,
+a:visited {
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: none;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-size: inherit;
+  font-weight: inherit;
+}
+
+html {
+  font-size: 10px;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-size: 1.4rem;
+  font-style: normal;
+  font-weight: normal;
+  line-height: 160%;
+  min-width: 1000px;
+  background: #ECE9E6; /* fallback for old browsers */ /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #FFFFFF, #ECE9E6); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: 30px;
+  width: 980px;
+  margin: 0 auto;
+  padding: 50px 10px;
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  gap: 10px;
+  padding: 10px 20px;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande", "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+  text-align: center;
+}
+
+.header__title {
+  font-size: 2.5rem;
+  color: rgb(121, 82, 151);
+}
+
+.header__subtitle {
+  color: rgb(53, 32, 70);
+  font-weight: 600;
+}
+
+.header__note {
+  color: rgb(53, 32, 70);
+  font-weight: 500;
+}
+
+.project {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  padding: 15px;
+  gap: 50px;
+  width: 100%;
+}
+
+.project__screen {
+  width: 70%;
+  margin: 0 auto;
+  padding: 8px;
+  border: 1px solid rgb(122, 75, 161);
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+}
+
+.projects__textarea {
+  width: 100%;
+  font-size: 1.6rem;
+  font-family: "Times New Roman", Times, serif;
+  color: rgb(53, 32, 70);
+  font-weight: 700;
+}
+
+.project__keyboard {
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 15px;
+  border-radius: 10px;
+  background: #f3f3f3;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+  border: 0.5px solid rgb(201, 173, 223);
+}
+
+.keyboard__row {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  gap: 5px;
+  align-items: center;
+}
+
+.keyboard__key {
+  width: 50px;
+  height: 50px;
+  font-size: 2rem;
+  font-weight: 500;
+  line-height: 40px;
+  text-align: center;
+  border-radius: 10%;
+  transition-duration: 0.3s;
+  cursor: pointer;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  border: 0.5px solid rgb(201, 173, 223);
+}
+
+.long {
+  width: 100px;
+}
+
+.colored {
+  background: rgba(163, 162, 212, 0.281);
+}
+
+.long:nth-child(4) {
+  flex: 0 1 50%;
+}
+
+.keyboard__key:hover {
+  box-shadow: rgb(121, 82, 151) 0px 3px 8px;
+}
+
+.active {
+  position: relative;
+  background: rgb(152, 118, 192);
+  top: 2px;
+  border-radius: 20%;
+  transition-duration: 0.3s;
+  border: 4px solid #ffffff;
+}
+
+.active-caps {
+  position: relative;
+  background: rgb(152, 118, 192);
+  border-radius: 20%;
+  transition-duration: 0.3s;
+  border: 4px solid #ffffff;
+}
+
+.keyboard__key:active {
+  position: relative;
+  background: rgb(152, 118, 192);
+  top: 2px;
+  border-radius: 20%;
+  transition-duration: 0.3s;
+  border: 4px solid #ffffff;
+}
