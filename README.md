@@ -18,3 +18,4 @@
 -  [X] usage of ES6+ features (classes, property destructuring, etc).
 
 -  [X] usage of ESLint.
+![sandrainporto github io_virtual-keyboard_](https://github.com/Sandrainporto/virtual-keyboard/assets/90930428/0244f916-6c62-4a7c-8ef3-46394e48df6e)
